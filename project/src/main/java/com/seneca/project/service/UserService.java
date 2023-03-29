@@ -66,12 +66,12 @@ public class UserService {
 
 	}
 
-	public List<DonationDto> findSomeD()
-	{
-		return repo.findSome();
-    }
-	public List<UserDto> findSomeData(String issue, String gen) {
-		return repo.findSomeDetails(issue, gen);
+//	public List<DonationDto> findSomeD()
+//	{
+//		return repo.findSome();
+//    }
+	public List<User> findSomeData(String issue,String gen) {
+		return repo.findSomeDetails( gen,issue);
 	}
 
 	public boolean check(User u, String email, String password) {

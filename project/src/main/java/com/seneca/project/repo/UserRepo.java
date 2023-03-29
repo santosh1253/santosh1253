@@ -21,13 +21,12 @@ public interface UserRepo extends JpaRepository<User,Integer>{
 //	@Query("select new com.seneca.project.Dto.UserDto(u.email, u.gender, u.BloodGroup, h.issue) from User u join HealthHistory h on u.id=h.uid")
 //	List<UserDto> findSome();
 
-	@Query("select new com.seneca.project.Dto.UserDto(u.email, u.gender, u.BloodGroup, h.issue,h.recovered,d.donatedDate,d.recievedDate,d.loc,d.isDonated) "
-			+ "from User u join HealthHistory h on u.id=h.uid join DonationHistory d on h.uid=d.uid where h.issue=?1 and u.gender=?2 ")
-	List<UserDto> findSomeDetails(String issue,String gen);
+	@Query("select u from User u join u.h as uh on u.id=uh.uid  where u.gender=?1 and uh.issue=?2 ")
+	List<User> findSomeDetails(String gen,String issue);
 	
-	@Query("select new com.seneca.project.Dto.DonationDto(u.email, u.gender, u.BloodGroup,new com.seneca.project.Dto.HealthDto(h.recovered,h.issue,h.effectedDate)) from  "
-			+ "User u join HealthHistory h on u.id=h.uid")
-	List<DonationDto> findSome();
+//	@Query("select new com.seneca.project.Dto.DonationDto(u.email, u.gender, u.BloodGroup,h.recovered,h.issue,h.effectedDate)) from  "
+//			+ "User u join HealthHistory h on u.id=h.uid")
+//	List<DonationDto> findSome();
 	
 	
 	

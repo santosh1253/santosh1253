@@ -59,15 +59,15 @@ public class UserController {
 
 	}
 
-	 @GetMapping("/find")
-	public List<DonationDto> findUsers()
-	{
-		return us.findSomeD();
-		
-	}
+//	 @GetMapping("/find")
+//	public List<DonationDto> findUsers()
+//	{
+//		return us.findSomeD();
+//		
+//	}
 	//Filter Details of users based on hlth issue and gender
 	@GetMapping("/findDetails")
-	public List<UserDto> finddata(@RequestParam("grp") String grp,
+	public List<User> finddata(@RequestParam("grp") String grp,
 			@RequestParam(required = false, defaultValue = "male", name = "gen") String gen) {
 		System.out.println(grp + " " + gen);
 		return us.findSomeData(grp, gen);
