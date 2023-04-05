@@ -14,7 +14,6 @@ public class DonationHistory {
 
 	@JoinColumn(name = "user_id")
 	int uid;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
 	int donationId;
@@ -57,10 +56,9 @@ public class DonationHistory {
 		
 	}
 
-	public DonationHistory(int uid, int donationId, String fname, String lname, String loc, LocalDate donatedDate,
+	public DonationHistory( int donationId, String fname, String lname, String loc, LocalDate donatedDate,
 			LocalDate recievedDate, boolean isDonated) {
 		super();
-		this.uid = uid;
 		this.donationId = donationId;
 		this.fname = fname;
 		this.lname = lname;
@@ -70,13 +68,6 @@ public class DonationHistory {
 		this.isDonated = isDonated;
 	}
    
-	public int getUid() {
-		return uid;
-	}
-
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
 
 	public String getFname() {
 		return fname;
@@ -121,7 +112,7 @@ public class DonationHistory {
 
 	@Override
 	public String toString() {
-		return "DonationHistory [uid=" + uid + ", donationId=" + donationId + ", fname=" + fname + ", lname=" + lname
+		return "DonationHistory [ donationId=" + donationId + ", fname=" + fname + ", lname=" + lname
 				+ ", loc=" + loc + ", donatedDate=" + donatedDate + ", recievedDate=" + recievedDate + ", isDonated="
 				+ isDonated + "]";
 	}

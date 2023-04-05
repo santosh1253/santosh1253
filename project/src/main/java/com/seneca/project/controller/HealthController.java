@@ -1,5 +1,6 @@
 package com.seneca.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,54 +10,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seneca.project.Dto.HealthDto;
-import com.seneca.project.entity.HealthHistory;
+import com.seneca.project.Dto.HealthRequestDto;
+import com.seneca.project.Dto.HealthResponseDto;
+import com.seneca.project.entity.HealthRecords;
 import com.seneca.project.service.HealthService;
-
 @RestController
+@RequestMapping("/healthRecord")
 public class HealthController {
-	String x="Hello";
+
 	@Autowired
 	private HealthService hs;
-
-	@PostMapping("/health/save")
-	public void saving(@RequestBody HealthHistory h) {
-		hs.saveDetails(h);
-	}
-
 	
-	@GetMapping("/hello")
-	public String display()
+	@PostMapping
+	public  ResponseEntity<HealthResponseDto> save(@RequestBody HealthRequestDto healthrequest)
 	{
-		return x;
+		HealthResponseDto hdto=hs.save(healthrequest);
+		return ResponseEntity.ok(hdto);
 	}
-    @GetMapping("/helloUser")
-    public String welcome(@RequestParam("username") String uname)
-    {
-    	return x+" "+uname;
-    }
-    @GetMapping("/hUser/{uname}")
-    public String hello(@PathVariable String uname)
-    {
-    	return x+" "+uname;
-    }
-	@GetMapping("/getHealthrecords/{uid}")
-	public ResponseEntity<List<HealthHistory>> getHealth(@PathVariable int uid) {
-        return ResponseEntity.ok().body(hs.getById(uid));
+	@GetMapping("/fetchHealthData/{id}")
+	public List<HealthDto> finddata(@PathVariable int id) 
+	{
+		List<HealthRecords> records=hs.getAll(id);
+		List<HealthDto> response = new ArrayList<>();
+		//System.out.println(records);
+		records.forEach(u -> {
+			HealthDto htdo=new HealthDto(u.isRecovered(),u.getIssue(),u.getDate());
+			response.add(htdo);
+		});
+		return response;
 
 	}
-
-	@GetMapping("/getByStatus/{str}")
-	public ResponseEntity<List<HealthHistory>> getStatus(@PathVariable Boolean str) {
-		return new ResponseEntity<>(hs.getByStatus(str), HttpStatus.OK);
-	}
-	
-	@GetMapping("/healthStatus")
-	public ResponseEntity<List<HealthDto>> healthStatus(@RequestParam("uid") int uid)
-	{
-		return new ResponseEntity<>(hs.getHealthStatus(uid),HttpStatus.OK);
-	}
-	}
+}

@@ -14,11 +14,10 @@ import jakarta.persistence.PrePersist;
 
 @Entity
 public class User {
-	// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	@OneToMany
-	private List<HealthHistory> h;
 	@OneToMany
 	private List<DonationHistory> d;
+	@OneToMany(mappedBy="user")
+	private List<HealthRecords> hr;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -76,7 +75,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = new BCryptPasswordEncoder().encode(password);
+		this.password = password;
 	}
 
 	public String getDateOfBirth() {

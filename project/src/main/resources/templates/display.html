@@ -15,7 +15,7 @@ function loadDoc() {
   xhttp.onload = function() {
     document.getElementById("demo").innerHTML = this.responseText;
   }
-  xhttp.open("GET", "http://localhost:8080/users");
+  xhttp.open("GET", "http://localhost:8080/getHealthrecords/4");
   xhttp.send();
 }
 </script>

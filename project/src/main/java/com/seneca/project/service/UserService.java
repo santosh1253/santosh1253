@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.seneca.project.Dto.DonationDto;
 import com.seneca.project.Dto.UserDto;
 import com.seneca.project.entity.User;
 import com.seneca.project.repo.UserRepo;
@@ -17,14 +16,14 @@ public class UserService {
 
 	@Autowired
 	UserRepo repo;
-	@Autowired
-	private PasswordEncoder b;
+//	@Autowired
+//	private PasswordEncoder b;
 
-	@Autowired
-	public UserService(UserRepo repo, PasswordEncoder b) {
-		this.repo = repo;
-		this.b = b;
-	}
+//	@Autowired
+//	public UserService(UserRepo repo, PasswordEncoder b) {
+//		this.repo = repo;
+//		this.b = b;
+//	}
 
 	public void saveOrupdate(User u) {
 		repo.save(u);
@@ -66,21 +65,22 @@ public class UserService {
 
 	}
 
-//	public List<DonationDto> findSomeD()
+//	public List<UserDto> findSomeD()
 //	{
 //		return repo.findSome();
 //    }
+	// Should return UserDto
 	public List<User> findSomeData(String issue,String gen) {
 		return repo.findSomeDetails( gen,issue);
 	}
 
-	public boolean check(User u, String email, String password) {
-		u = repo.findByEmail(email);
-		System.out.println(u.getPassword());
-		if (u != null && b.matches(password, u.getPassword()))
-			return true;
-		return false;
-
-	}
+//	public boolean check(User u, String email, String password) {
+//		u = repo.findByEmail(email);
+//		System.out.println(u.getPassword());
+//		if (u != null && b.matches(password, u.getPassword()))
+//			return true;
+//		return false;
+//
+//	}
 
 }
