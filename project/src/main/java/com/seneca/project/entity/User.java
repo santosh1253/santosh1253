@@ -2,41 +2,44 @@ package com.seneca.project.entity;
 
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="Users")
 public class User {
-	@OneToMany
-	private List<DonationHistory> d;
-	@OneToMany(mappedBy="user")
-	private List<HealthRecords> hr;
+
+	@OneToMany(mappedBy = "user")
+	private List<HealthHistory> hr;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String first_name;
-	private String last_name;
+	
+	private String firstName;
+	
+	private String lastName;
+	
 	@Column(nullable = false, unique = true)
 	private String email;
+	
 	@Column(nullable = false)
 	private String password;
+	
 	private String dateOfBirth;
+	
 	private String gender;
-	private String contactno;
-	private String Address;
-	private String BloodGroup;
-
-	@PrePersist
-	public void encryptPassword() {
-		password = new BCryptPasswordEncoder().encode(password);
-	}
+	
+	private String contactNo;
+	
+	private String address;
+	
+	private String bloodGroup;
 
 	public int getId() {
 		return id;
@@ -46,20 +49,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getfirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setfisrtName(String fisrtName) {
+		this.firstName = fisrtName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getlastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setlastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -94,55 +97,55 @@ public class User {
 		this.gender = gender;
 	}
 
-	public String getContactno() {
-		return contactno;
+	public String getcontactNo() {
+		return contactNo;
 	}
 
-	public void setContactno(String contactno) {
-		this.contactno = contactno;
+	public void setcontactNo(String contactNo) {
+		this.contactNo = contactNo;
 	}
 
-	public String getAddress() {
-		return Address;
+	public String getaddress() {
+		return address;
 	}
 
-	public void setAddress(String address) {
-		Address = address;
+	public void setaddress(String address) {
+		this.address = address;
 	}
 
-	public String getBloodGroup() {
-		return BloodGroup;
+	public String getbloodGroup() {
+		return bloodGroup;
 	}
 
-	public void setBloodGroup(String bloodGroup) {
-		BloodGroup = bloodGroup;
+	public void setbloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-	public User(int id, String first_name, String last_name, String email, String password, String dateOfBirth,
-			String gender, String contactno, String address, String bloodGroup) {
+
+	public User(int id, String fisrtName, String lastName, String email, String password, String dateOfBirth,
+			String gender, String contactNo, String address, String bloodGroup) {
 		super();
 		this.id = id;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = fisrtName;
+		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
-		this.contactno = contactno;
-		Address = address;
-		BloodGroup = bloodGroup;
+		this.contactNo = contactNo;
+		this.address = address;
+		this.bloodGroup = bloodGroup;
 	}
 
 	@Override
 	public String toString() {
-		return "user [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email
-				+ ", password=" + password + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", contactno="
-				+ contactno + ", Address=" + Address + ", BloodGroup=" + BloodGroup + "]";
+		return "user [id=" + id + ", fisrtName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", contactNo="
+				+ contactNo + ", address=" + address + ", bloodGroup=" + bloodGroup + "]";
 	}
 
 }

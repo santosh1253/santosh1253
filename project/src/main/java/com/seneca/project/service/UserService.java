@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.seneca.project.Dto.UserDto;
@@ -15,72 +14,57 @@ import com.seneca.project.repo.UserRepo;
 public class UserService {
 
 	@Autowired
-	UserRepo repo;
-//	@Autowired
-//	private PasswordEncoder b;
+	UserRepo userRepo;
 
-//	@Autowired
-//	public UserService(UserRepo repo, PasswordEncoder b) {
-//		this.repo = repo;
-//		this.b = b;
-//	}
-
-	public void saveOrupdate(User u) {
-		repo.save(u);
+	// save details of a user
+	public void saveDetails(User u) {
+		userRepo.save(u);
 	}
 
-	public List<User> getAll() {
-		List<User> l = new ArrayList<>();
-		repo.findAll().forEach(x -> l.add(x));
-		return l;
+	public List<UserDto> getAll() {
+		List<User> users = userRepo.findAll();
+		List<UserDto> response = new ArrayList<>();
+		users.forEach(u -> {
+			UserDto userDto = new UserDto(u.getfirstName(), u.getlastName(), u.getEmail(), u.getDateOfBirth(),
+					u.getGender(), u.getcontactNo(), u.getaddress(), u.getbloodGroup());
+			response.add(userDto);
+		});
+		return response;
 	}
 
-	public void delete(int id) {
-		repo.deleteById(id);
-	}
-
-	public User getById(int id) {
-		return repo.findById(id).get();
-
-	}
 
 	public void updateUserById(int id, User updated) {
 
-		User u = repo.findById(id).orElseThrow(() -> new RuntimeException("user Not found"));
-		u.setFirst_name(updated.getFirst_name());
-		u.setLast_name(updated.getLast_name());
+		User u = userRepo.findById(id).orElseThrow(() -> new RuntimeException("user Not found"));
+		u.setfisrtName(updated.getfirstName());
+		u.setlastName(updated.getlastName());
 		u.setDateOfBirth(updated.getDateOfBirth());
-		u.setAddress(updated.getAddress());
+		u.setaddress(updated.getaddress());
 		u.setGender(updated.getGender());
 		u.setEmail(updated.getEmail());
-		u.setContactno(updated.getContactno());
-		u.setBloodGroup(updated.getBloodGroup());
+		u.setcontactNo(updated.getcontactNo());
+		u.setbloodGroup(updated.getbloodGroup());
 		u.setPassword(updated.getPassword());
-		repo.save(u);
+		userRepo.save(u);
 	}
 
 	public User findUser(int id) {
 
-		return repo.find(id);
+		return userRepo.find(id);
 
 	}
 
-//	public List<UserDto> findSomeD()
-//	{
-//		return repo.findSome();
-//    }
-	// Should return UserDto
-	public List<User> findSomeData(String issue,String gen) {
-		return repo.findSomeDetails( gen,issue);
-	}
+	// returns a UserDto
+	public List<UserDto> findSomeData(String bloodGrp, String issue) {
 
-//	public boolean check(User u, String email, String password) {
-//		u = repo.findByEmail(email);
-//		System.out.println(u.getPassword());
-//		if (u != null && b.matches(password, u.getPassword()))
-//			return true;
-//		return false;
-//
-//	}
+		List<User> users = userRepo.findSomeDetails(bloodGrp, issue);
+		List<UserDto> response = new ArrayList<>();
+		users.forEach(u -> {
+			UserDto userDto = new UserDto(u.getfirstName(), u.getlastName(), u.getEmail(), u.getDateOfBirth(),
+					u.getGender(), u.getcontactNo(), u.getaddress(), u.getbloodGroup());
+			response.add(userDto);
+		});
+		return response;
+	}
 
 }

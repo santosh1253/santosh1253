@@ -9,10 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class HealthRecords {
+public class HealthHistory {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int healthId;
 	@ManyToOne
 	private User user;
@@ -22,7 +22,7 @@ public class HealthRecords {
 
 	
 
-	public HealthRecords(User user, LocalDate date, String issue, boolean recovered) {
+	public HealthHistory(User user, LocalDate date, String issue, boolean recovered) {
 		super();
 		//this.healthId = healthId;
 		this.user = user;
@@ -93,7 +93,7 @@ public class HealthRecords {
 
 
 
-	public HealthRecords() {
+	public HealthHistory() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
